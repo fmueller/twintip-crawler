@@ -8,36 +8,19 @@ service endpoints and fetches their swagger specifications.
 
 Releases are pushed as Docker images in the [public Docker registry](https://registry.hub.docker.com/u/stups/):
 
-You can run Kio by starting it with Docker:
+You can run it with Docker:
 
-    $ docker run -it stups/twintip-storage
     $ docker run -it stups/twintip-crawler
-
-## Requirements
-
-* PostgreSQL 9.3+
 
 ## Configuration
 
 Configuration is provided via environment variables during start.
 
-Variable         | Default                | Description
----------------- | ---------------------- | -----------
-HTTP_PORT        | `8080`                 | TCP port to provide the HTTP API.
-HTTP_CORS_ORIGIN |                        | Domain for cross-origin JavaScript requests. If set, the Access-Control headers will be set.
-DB_SUBNAME       | `//localhost:5432/kio` | JDBC connection information of your database.
-DB_USER          | `postgres`             | Database user.
-DB_PASSWORD      | `postgres`             | Database password.
-
-Example:
-
-```
-$ docker run -it \
-    -e HTTP_CORS_ORIGIN="*.zalando.de" \
-    -e DB_USER=kio \
-    -e DB_PASSWORD=kio123 \
-    stups/twintip-storage
-```
+Variable                 | Default | Description
+------------------------ | ------- | -----------
+JOBS_KIO_URL             |         | Base url of Kio (mandatory)
+JOBS_TWINTIP_STORAGE_URL |         | Base url of Twintip storage (mandatory)
+OAUTH2_ACCESS_TOKEN_URL  |         | Needed for authentication (optional)
 
 ## Building
 
@@ -50,7 +33,7 @@ $ docker run -it \
 
 ## Developing
 
-Kio embeds the [reloaded](http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded) workflow for interactive
+Twintip embeds the [reloaded](http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded) workflow for interactive
 development:
 
     $ lein repl
