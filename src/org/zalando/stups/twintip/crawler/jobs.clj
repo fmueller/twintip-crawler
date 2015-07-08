@@ -40,7 +40,8 @@
           ui-url (:ui_url discovery)]
       (try
         (let [definition (:body (client/get schema-url
-                                            {:as :json-string-keys}))
+                                            {:oauth-token (oauth2/access-token :schema tokens)
+                                             :as :json-string-keys}))
               swagger-2-0? (and (= schema-type "swagger-2.0")
                                 (= (get definition "swagger") "2.0"))
               name (when swagger-2-0? (get-in definition ["info" "title"]))
