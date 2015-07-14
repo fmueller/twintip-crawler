@@ -27,7 +27,7 @@
 
 (defn- get-app-api-info
   "Fetch information about one application."
-  [app-service-url]
+  [app-service-url tokens]
   (try
     ; TODO make discovery endpoint configurable
     (let [discovery (:body (client/get (conpath app-service-url "/.well-known/schema-discovery")
@@ -93,7 +93,7 @@
 
         (doseq [{:keys [id service_url] :as app} apps]
           (log/debug "Fetching update for %s from %s..." id service_url)
-          (let [api-info (get-app-api-info service_url)]
+          (let [api-info (get-app-api-info service_url tokens)]
             (log/debug "Storing result for %s: %s" id api-info)
             (try
               (client/put (conpath twintip-storage-url "/apps/" id)
