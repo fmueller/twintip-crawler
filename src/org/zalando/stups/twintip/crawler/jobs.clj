@@ -1,5 +1,5 @@
 (ns org.zalando.stups.twintip.crawler.jobs
-  (:require [org.zalando.stups.friboo.system.cron :refer [def-cron-component]]
+  (:require [org.zalando.stups.friboo.system.cron :refer [def-cron-component job]]
             [org.zalando.stups.friboo.log :as log]
             [org.zalando.stups.friboo.config :refer [require-config]]
             [overtone.at-at :refer [every]]
@@ -111,4 +111,4 @@
 
   (let [{:keys [every-ms initial-delay-ms]} configuration]
 
-    (every every-ms #(crawl configuration tokens) pool :initial-delay initial-delay-ms :desc "API crawling")))
+    (every every-ms (job crawl configuration tokens) pool :initial-delay initial-delay-ms :desc "API crawling")))
