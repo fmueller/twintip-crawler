@@ -31,7 +31,11 @@
   (try
     ; TODO make discovery endpoint configurable
     (let [discovery (:body (client/get (conpath app-service-url "/.well-known/schema-discovery")
-                                       {:as :json}))
+                                       {:as :json
+                                        :socket-timeout 500
+                                        :conn-timeout 1000
+                                        :follow-redirects false
+                                        :client-params {:cookie-policy (constantly nil)}}))
           schema-url (:schema_url discovery)
           schema-url (if (.startsWith schema-url "/")
                        (conpath app-service-url schema-url)
