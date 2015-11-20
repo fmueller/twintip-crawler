@@ -70,7 +70,7 @@
            :definition nil})))
 
     (catch Exception e
-      (log/warn "Undiscoverable service %s: %s" app-service-url (str e))
+      (log/debug "Undiscoverable service %s: %s" app-service-url (str e))
       ; cannot even load discovery document
       {; TODO make explicit status code for "NOT_REACHABLE" (no connection) and "NO_DISCOVERY" (404)
        :status     (str "UNDISCOVERABLE")
@@ -104,7 +104,7 @@
                           {:oauth-token  (oauth2/access-token :twintip-rw-api tokens)
                            :content-type :application/json
                            :form-params  api-info})
-              (log/info "Updated %s." id)
+              (log/info "Updated %s using URL %s which resulted in %s." id service_url api-info)
               (catch Exception e
                 (log/error e "Could not store result for %s in %s: %s" id twintip-storage-url (str e))))))))
     (catch Throwable e
