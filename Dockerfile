@@ -4,6 +4,6 @@ MAINTAINER Zalando SE
 
 COPY target/twintip-crawler.jar /
 
-CMD java $(java-dynamic-memory-opts) $(newrelic-agent) $(appdynamics-agent) -jar /twintip-crawler.jar
+CMD java $JAVA_OPTS $(java-dynamic-memory-opts) $(newrelic-agent) $(appdynamics-agent) -jar /twintip-crawler.jar
 
 ADD target/scm-source.json /scm-source.json

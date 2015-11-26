@@ -4,7 +4,7 @@
             [org.zalando.stups.friboo.config :refer [require-config]]
             [overtone.at-at :refer [every]]
             [clj-http.client :as client]
-            [clojure.data.json :as json]
+            [cheshire.core :as json]
             [org.zalando.stups.friboo.system.oauth2 :as oauth2]))
 
 (def default-configuration
@@ -56,7 +56,7 @@
            :version    version
            :url        schema-url
            :ui         ui-url
-           :definition (json/write-str definition)})
+           :definition (json/generate-string definition)})
 
         (catch Exception e
           (log/debug "Definition unavailable %s: %s" schema-url (str e))
@@ -104,7 +104,7 @@
                           {:oauth-token  (oauth2/access-token :twintip-rw-api tokens)
                            :content-type :application/json
                            :form-params  api-info})
-              (log/info "Updated %s using URL %s which resulted in %s." id service_url api-info)
+              (log/info "Updated %s using URL %s which resulted in %s." id service_url (dissoc api-info :definition))
               (catch Exception e
                 (log/error e "Could not store result for %s in %s: %s" id twintip-storage-url (str e))))))))
     (catch Throwable e

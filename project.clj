@@ -7,8 +7,8 @@
 
   :min-lein-version "2.0.0"
 
-  :dependencies [[org.clojure/clojure "1.6.0"]
-                 [org.zalando.stups/friboo "0.32.0"]]
+  :dependencies [[org.clojure/clojure "1.7.0"]
+                 [org.zalando.stups/friboo "1.5.3"]]
 
   :main ^:skip-aot org.zalando.stups.twintip.crawler.core
   :uberjar-name "twintip-crawler.jar"
@@ -44,4 +44,4 @@
              :dev     {:repl-options {:init-ns user}
                        :source-paths ["dev"]
                        :dependencies [[org.clojure/tools.namespace "0.2.10"]
-                                      [org.clojure/java.classpath "0.2.2"]]}})
+                                      [org.clojure/java.classpath "0.2.3"]]}})
