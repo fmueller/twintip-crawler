@@ -32,6 +32,7 @@
     ; TODO make discovery endpoint configurable
     (let [discovery (:body (client/get (conpath app-service-url "/.well-known/schema-discovery")
                                        {:as :json
+                                        :insecure true
                                         :socket-timeout 500
                                         :conn-timeout 1000
                                         :follow-redirects false
@@ -44,7 +45,8 @@
           ui-url (:ui_url discovery)]
       (try
         (let [definition (:body (client/get schema-url
-                                            {:oauth-token (oauth2/access-token :schema tokens)
+                                            {:insecure true
+                                             :oauth-token (oauth2/access-token :schema tokens)
                                              :as :json-string-keys}))
               swagger-2-0? (and (= schema-type "swagger-2.0")
                                 (= (get definition "swagger") "2.0"))
@@ -90,7 +92,8 @@
       (log/debug "Starting new crawl run with %s..." kio-url)
 
       (let [apps (:body (client/get (conpath kio-url "/apps")
-                                    {:oauth-token (oauth2/access-token :kio-ro-api tokens)
+                                    {:insecure true
+                                     :oauth-token (oauth2/access-token :kio-ro-api tokens)
                                      :as          :json}))]
         (log/info "Found %s apps in Kio; fetching their APIs..." (count apps))
         (log/debug "Fetching APIs of the following apps: %s" apps)
@@ -101,7 +104,8 @@
             (log/debug "Storing result for %s: %s" id api-info)
             (try
               (client/put (conpath twintip-storage-url "/apps/" id)
-                          {:oauth-token  (oauth2/access-token :twintip-rw-api tokens)
+                          {:insecure true
+                           :oauth-token  (oauth2/access-token :twintip-rw-api tokens)
                            :content-type :application/json
                            :form-params  api-info})
               (log/info "Updated %s using URL %s which resulted in %s." id service_url (dissoc api-info :definition))
