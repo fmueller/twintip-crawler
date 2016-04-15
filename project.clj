@@ -8,7 +8,7 @@
   :min-lein-version "2.0.0"
 
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.zalando.stups/friboo "1.6.0"]]
+                 [org.zalando.stups/friboo "1.7.0"]]
 
   :main ^:skip-aot org.zalando.stups.twintip.crawler.core
   :uberjar-name "twintip-crawler.jar"
